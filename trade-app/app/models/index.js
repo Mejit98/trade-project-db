@@ -1,5 +1,5 @@
 const dbConfig = require("../config/db.config.js");
-const Sequelize = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD
 , {
 host: dbConfig.HOST,
@@ -16,7 +16,7 @@ idle: dbConfig.pool.idle
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.janr = require("./janr.model.js")(sequelize, DataTypes);
+db.Genre = require("./genre.model.js")(sequelize, DataTypes);
 db.Content = require("./content.model.js")(sequelize, DataTypes);
 db.Pricelist = require("./pricelist.model.js")(sequelize, DataTypes);
 db.Priceitem = require("./priceitem.model.js")(sequelize, DataTypes);
