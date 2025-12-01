@@ -1,65 +1,56 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize({
-  dialect: 'postgres',
-  host: process.env.DB_HOST || 'localhost',
+const dbConfig = require("../config/db.config.js");
+const { Sequelize, DataTypes } = require("sequelize");
+
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+  host: dbConfig.HOST,
+  dialect: dbConfig.dialect,
   port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'content_db',
-  username: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'password'
+  pool: dbConfig.pool
 });
 
 const db = {};
-
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// Импорт моделей
-db.Genre = require('./genre.model.js')(sequelize, Sequelize);
-db.Content = require('./content.model.js')(sequelize, Sequelize);
-db.PriceList = require('./priceList.model.js')(sequelize, Sequelize);
-db.PriceListItem = require('./priceListItem.model.js')(sequelize, Sequelize);
-db.User = require('./user.model.js')(sequelize, Sequelize);
-db.Order = require('./order.model.js')(sequelize, Sequelize);
-db.OrderItem = require('./orderItem.model.js')(sequelize, Sequelize);
-db.Payment = require('./payment.model.js')(sequelize, Sequelize);
-db.AccessGrant = require('./accessGrant.model.js')(sequelize, Sequelize);
+// импорт моделей
+db.Genre = require("./genre.model.js")(sequelize, DataTypes);
+db.Content = require("./content.model.js")(sequelize, DataTypes);
+db.PriceList = require("./pricelist.model.js")(sequelize, DataTypes);
+db.PriceItem = require("./priceitem.model.js")(sequelize, DataTypes);
+db.User = require("./user.model.js")(sequelize, DataTypes);
+db.Order = require("./order.model.js")(sequelize, DataTypes);
+db.OrderItem = require("./orderitem.model.js")(sequelize, DataTypes);
+db.Payment = require("./payment.model.js")(sequelize, DataTypes);
+db.Access = require("./access.model.js")(sequelize, DataTypes);
 
-// Определение связей между моделями
 
-// Жанр - Контент (один ко многим)
-db.Genre.hasMany(db.Content, { foreignKey: 'genre_id', as: 'contents' });
-db.Content.belongsTo(db.Genre, { foreignKey: 'genre_id', as: 'genre' });
+db.Genre.hasMany(db.Content, { foreignKey: 'Код_жанра' });
+db.Content.belongsTo(db.Genre, { foreignKey: 'Код_жанра' });
 
-// Прайс-лист - Элементы прайс-листа (один ко многим)
-db.PriceList.hasMany(db.PriceListItem, { foreignKey: 'price_list_id', as: 'items' });
-db.PriceListItem.belongsTo(db.PriceList, { foreignKey: 'price_list_id', as: 'price_list' });
+db.PriceList.hasMany(db.PriceItem, { foreignKey: 'Номер_прайс_листа' });
+db.PriceItem.belongsTo(db.PriceList, { foreignKey: 'Номер_прайс_листа' });
 
-// Контент - Элементы прайс-листа (один ко многим)
-db.Content.hasMany(db.PriceListItem, { foreignKey: 'content_id', as: 'price_items' });
-db.PriceListItem.belongsTo(db.Content, { foreignKey: 'content_id', as: 'content' });
+db.Content.hasMany(db.PriceItem, { foreignKey: 'Код_контента' });
+db.PriceItem.belongsTo(db.Content, { foreignKey: 'Код_контента' });
 
-// Пользователь - Заказы (один ко многим)
-db.User.hasMany(db.Order, { foreignKey: 'user_id', as: 'orders' });
-db.Order.belongsTo(db.User, { foreignKey: 'user_id', as: 'user' });
 
-// Заказ - Позиции заказа (один ко многим)
-db.Order.hasMany(db.OrderItem, { foreignKey: 'order_id', as: 'items' });
-db.OrderItem.belongsTo(db.Order, { foreignKey: 'order_id', as: 'order' });
+db.User.hasMany(db.Order, { foreignKey: 'Код_пользователя' });
+db.Order.belongsTo(db.User, { foreignKey: 'Код_пользователя' });
 
-// Заказ - Элемент прайс-листа через OrderItem
-db.PriceListItem.hasMany(db.OrderItem, { foreignKey: 'price_list_item_id', as: 'order_items' });
-db.OrderItem.belongsTo(db.PriceListItem, { foreignKey: 'price_list_item_id', as: 'price_item' });
 
-// Заказ - Платежи (один ко многим)
-db.Order.hasMany(db.Payment, { foreignKey: 'order_id', as: 'payments' });
-db.Payment.belongsTo(db.Order, { foreignKey: 'order_id', as: 'order' });
+db.Order.hasMany(db.OrderItem, { foreignKey: 'Номер_заказа' });
+db.OrderItem.belongsTo(db.Order, { foreignKey: 'Номер_заказа' });
 
-// Пользователь - Выдача доступа (один ко многим)
-db.User.hasMany(db.AccessGrant, { foreignKey: 'user_id', as: 'access_grants' });
-db.AccessGrant.belongsTo(db.User, { foreignKey: 'user_id', as: 'user' });
 
-// Контент - Выдача доступа (один ко многим)
-db.Content.hasMany(db.AccessGrant, { foreignKey: 'content_id', as: 'access_grants' });
-db.AccessGrant.belongsTo(db.Content, { foreignKey: 'content_id', as: 'content' });
+db.Content.hasMany(db.OrderItem, { foreignKey: 'Код_контента' });
+db.OrderItem.belongsTo(db.Content, { foreignKey: 'Код_контента' });
+
+
+db.Order.hasMany(db.Payment, { foreignKey: 'Номер_заказа' });
+db.Payment.belongsTo(db.Order, { foreignKey: 'Номер_заказа' });
+
+
+db.Order.hasMany(db.Access, { foreignKey: 'Номер_заказа' });
+db.Content.hasMany(db.Access, { foreignKey: 'Код_контента' });
 
 module.exports = db;
