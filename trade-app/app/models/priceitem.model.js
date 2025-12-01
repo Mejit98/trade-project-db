@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Priceitem = sequelize.define("Элемент_прайс-листа", {
+  const Priceitem = sequelize.define("Priceitem", {
     Код_элемента: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
     Код_прайс_листа: { type: DataTypes.INTEGER, allowNull: false },
     Код_контента: { type: DataTypes.INTEGER, allowNull: false },

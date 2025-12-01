@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Content = sequelize.define("Контент", {
+  const Content = sequelize.define("Content", {
     Код_контента: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
     Название: { type: DataTypes.STRING(100), allowNull: false },
     Код_жанра: { type: DataTypes.INTEGER, allowNull: false },

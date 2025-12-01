@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Orderitem = sequelize.define("Позиция_заказа", {
+  const Orderitem = sequelize.define("Orderitem", {
     Код_позиции: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
     Код_заказа: { type: DataTypes.INTEGER, allowNull: false },
     Код_элемента: { type: DataTypes.INTEGER, allowNull: false },

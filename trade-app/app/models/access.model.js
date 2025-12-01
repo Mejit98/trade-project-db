@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Access = sequelize.define("Выдача_доступа", {
+  const Access = sequelize.define("Access", {
     Код_выдачи: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
     Код_пользователя: { type: DataTypes.INTEGER, allowNull: false },
     Код_контента: { type: DataTypes.INTEGER, allowNull: false },

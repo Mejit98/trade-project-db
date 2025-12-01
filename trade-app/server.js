@@ -32,6 +32,16 @@ db.sequelize.sync()
 
 // порт сервера из переменной окружения
 const PORT = process.env.NODE_DOCKER_PORT || 8080;
+require("./app/routes/genre.routes.js")(app);
+require("./app/routes/content.routes.js")(app);
+require("./app/routes/pricelist.routes.js")(app);
+require("./app/routes/priceitem.routes.js")(app);
+require("./app/routes/user.routes.js")(app);
+require("./app/routes/order.routes.js")(app);
+require("./app/routes/orderitem.routes.js")(app);
+require("./app/routes/payment.routes.js")(app);
+require("./app/routes/access.routes.js")(app);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Payment = sequelize.define("Платёж", {
+  const Payment = sequelize.define("Payment", {
     Код_платежа: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
     Код_заказа: { type: DataTypes.INTEGER, allowNull: false },
     Сумма: { type: DataTypes.DECIMAL(10, 2), allowNull: false },

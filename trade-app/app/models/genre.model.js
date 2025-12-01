@@ -1,7 +1,7 @@
-const { janr } = require(".");
+const { Gentre } = require(".");
 
 module.exports = (sequelize, DataTypes) => {
-  const Genre = sequelize.define("Жанр", {
+  const Genre = sequelize.define("Genre", {
     Код_жанра: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
     Название: { type: DataTypes.STRING(50), allowNull: false },
     Базовый_код_жанра: { type: DataTypes.INTEGER, allowNull: true },
