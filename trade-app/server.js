@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 // синхронизация базы данных
-db.sequelize.sync()
+db.sequelize.sync({force: true})
   .then(() => {
     console.log("Synced db.");
   })
@@ -45,4 +45,3 @@ require("./app/routes/access.routes.js")(app);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-

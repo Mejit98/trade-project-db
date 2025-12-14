@@ -1,13 +1,13 @@
 module.exports = app => {
-  const payment = require("../controllers/payment.controller.js");
+  const payments = require("../controllers/payment.controller.js");
   const router = require("express").Router();
 
-  router.get("/", payment.findAll);
-  router.post("/", payment.create);
-  router.delete("/", payment.deleteAll);
-  router.get("/:id", payment.findOne);
-  router.put("/:id", payment.update);
-  router.delete("/:id", payment.delete);
+  router.get("/", payments.findAll);
+  router.post("/", payments.create);
+  router.delete("/", payments.deleteAll);
+  router.get("/:id", payments.findOne);
+  router.put("/:id", payments.update);
+  router.delete("/:id", payments.delete);
 
   app.use("/api/payments", router);
 };

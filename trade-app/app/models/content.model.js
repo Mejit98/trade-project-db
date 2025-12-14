@@ -1,14 +1,16 @@
 module.exports = (sequelize, DataTypes) => {
   const Content = sequelize.define("Content", {
-    Код_контента: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
-    Название: { type: DataTypes.STRING(100), allowNull: false },
-    Код_жанра: { type: DataTypes.INTEGER, allowNull: false },
-    Описание: { type: DataTypes.STRING(512), allowNull: true },
-    Продолжительность: { type: DataTypes.INTEGER, allowNull: true } // в минутах
+    id: { type: DataTypes.INTEGER, primaryKey: true,autoIncrement: true, allowNull: false },
+    name: { type: DataTypes.STRING(100), allowNull: false },
+    genre_id: { type: DataTypes.INTEGER, allowNull: false },
+    description: { type: DataTypes.STRING(512), allowNull: true },
+    duration: { type: DataTypes.INTEGER, allowNull: true } // in minutes
   }, {
-    tableName: "Контент",
+    tableName: "content",
     timestamps: false
   });
+  
+
 
   return Content;
 };

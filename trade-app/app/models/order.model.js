@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define("Order", {
-    Код_заказа: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
-    Код_пользователя: { type: DataTypes.INTEGER, allowNull: false },
-    Дата_создания: { type: DataTypes.DATE, allowNull: false },
-    Статус: { type: DataTypes.STRING(20), allowNull: false }
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },         // Код_заказа
+    user_id: { type: DataTypes.INTEGER, allowNull: false },                       // Код_пользователя
+    created_at: { type: DataTypes.DATE, allowNull: false },                       // Дата_создания
+    status: { type: DataTypes.STRING(20), allowNull: false }                      // Статус
   }, {
-    tableName: "Заказ",
+    tableName: "order",   // оставляем имя таблицы как в оригинале
     timestamps: false
   });
 

@@ -1,13 +1,13 @@
 module.exports = app => {
-  const orderitem = require("../controllers/orderitem.controller.js");
+  const orderitems = require("../controllers/orderitem.controller.js");
   const router = require("express").Router();
 
-  router.get("/", orderitem.findAll);
-  router.post("/", orderitem.create);
-  router.delete("/", orderitem.deleteAll);
-  router.get("/:id1/:id2", orderitem.findOne);
-  router.put("/:id1/:id2", orderitem.update);
-  router.delete("/:id1/:id2", orderitem.delete);
+  router.get("/", orderitems.findAll);
+  router.post("/", orderitems.create);
+  router.delete("/", orderitems.deleteAll);
+  router.get("/:id1/:id2", orderitems.findOne);
+  router.put("/:id1/:id2", orderitems.update);
+  router.delete("/:id1/:id2", orderitems.delete);
 
   app.use("/api/orderitems", router);
 };

@@ -5,6 +5,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   port: process.env.DB_PORT || 5432,
+  define: {
+    underscored: true  
+  },
   pool: dbConfig.pool
 });
 
@@ -23,34 +26,34 @@ db.OrderItem = require("./orderitem.model.js")(sequelize, DataTypes);
 db.Payment = require("./payment.model.js")(sequelize, DataTypes);
 db.Access = require("./access.model.js")(sequelize, DataTypes);
 
+// Associations
+db.Genre.hasMany(db.Content, { foreignKey: 'genre_id' });
+db.Content.belongsTo(db.Genre, { foreignKey: 'genre_id' });
 
-db.Genre.hasMany(db.Content, { foreignKey: 'Код_жанра' });
-db.Content.belongsTo(db.Genre, { foreignKey: 'Код_жанра' });
+db.PriceList.hasMany(db.PriceItem, { foreignKey: 'price_list_id' });
+db.PriceItem.belongsTo(db.PriceList, { foreignKey: 'price_list_id' });
 
-db.PriceList.hasMany(db.PriceItem, { foreignKey: 'Номер_прайс_листа' });
-db.PriceItem.belongsTo(db.PriceList, { foreignKey: 'Номер_прайс_листа' });
+db.Content.hasMany(db.PriceItem, { foreignKey: 'content_id' });
+db.PriceItem.belongsTo(db.Content, { foreignKey: 'content_id' });
 
-db.Content.hasMany(db.PriceItem, { foreignKey: 'Код_контента' });
-db.PriceItem.belongsTo(db.Content, { foreignKey: 'Код_контента' });
+db.User.hasMany(db.Order, { foreignKey: 'user_id' });
+db.Order.belongsTo(db.User, { foreignKey: 'user_id' });
+
+db.Order.hasMany(db.OrderItem, { foreignKey: 'order_id' });
+db.OrderItem.belongsTo(db.Order, { foreignKey: 'order_id' });
+
+db.Content.hasMany(db.OrderItem, { foreignKey: 'content_id' });
+db.OrderItem.belongsTo(db.Content, { foreignKey: 'content_id' });
+
+db.Order.hasMany(db.Payment, { foreignKey: 'order_id' });
+db.Payment.belongsTo(db.Order, { foreignKey: 'order_id' });
+
+db.Order.hasMany(db.Access, { foreignKey: 'order_id' });
+db.Access.belongsTo(db.Order, { foreignKey: 'order_id' });
+
+db.Content.hasMany(db.Access, { foreignKey: 'content_id' });
+db.Access.belongsTo(db.Content, { foreignKey: 'content_id' });
 
 
-db.User.hasMany(db.Order, { foreignKey: 'Код_пользователя' });
-db.Order.belongsTo(db.User, { foreignKey: 'Код_пользователя' });
-
-
-db.Order.hasMany(db.OrderItem, { foreignKey: 'Номер_заказа' });
-db.OrderItem.belongsTo(db.Order, { foreignKey: 'Номер_заказа' });
-
-
-db.Content.hasMany(db.OrderItem, { foreignKey: 'Код_контента' });
-db.OrderItem.belongsTo(db.Content, { foreignKey: 'Код_контента' });
-
-
-db.Order.hasMany(db.Payment, { foreignKey: 'Номер_заказа' });
-db.Payment.belongsTo(db.Order, { foreignKey: 'Номер_заказа' });
-
-
-db.Order.hasMany(db.Access, { foreignKey: 'Номер_заказа' });
-db.Content.hasMany(db.Access, { foreignKey: 'Код_контента' });
 
 module.exports = db;

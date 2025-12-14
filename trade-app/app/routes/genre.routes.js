@@ -1,13 +1,13 @@
 module.exports = app => {
-  const genre = require("../controllers/genre.controller.js");
+  const genres = require("../controllers/genre.controller.js");
   const router = require("express").Router();
 
-  router.get("/", genre.findAll);
-  router.post("/", genre.create);
-  router.delete("/", genre.deleteAll);
-  router.get("/:id", genre.findOne);
-  router.put("/:id", genre.update);
-  router.delete("/:id", genre.delete);
+  router.get("/", genres.findAll);
+  router.post("/", genres.create);
+  router.delete("/", genres.deleteAll);
+  router.get("/:id", genres.findOne);
+  router.put("/:id", genres.update);
+  router.delete("/:id", genres.delete);
 
   app.use("/api/genres", router);
 };
