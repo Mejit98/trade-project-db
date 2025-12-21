@@ -18,7 +18,7 @@ Docker Compose
 
 Клонируйте репозиторий:
 
-git clone https://github.com/Mejit98/trade-project dbcd-trade-project
+git clone https://github.com/Mejit98/trade-project-db 
 
 
 Перейдите в папку проекта:
