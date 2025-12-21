@@ -22,8 +22,9 @@ git clone https://github.com/Mejit98/trade-project-db
 
 
 Перейдите в папку проекта:
-
+```
 cd trade-project
+```
 
 
 Запустите проект через Docker:
